@@ -304,3 +304,9 @@ class _CodesViewManagerState extends State<CodesViewManager> {
     );
   }
 }
+/*
+cd moatmat_admin && flutter clean && cd ..
+cd moatmat_app && flutter clean && cd ..
+cd moatmat_teacher && flutter clean && cd ..
+cd moatmat_uploader&& flutter clean && cd ..
+*/
