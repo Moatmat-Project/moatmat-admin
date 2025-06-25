@@ -71,5 +71,6 @@ class AppBarTitles {
   static const addSchool = "إضافة مدرسة";
   static const schools = "المدارس";
   static const updateSchool = "تعديل بيانات مدرسة";
+  static const home = "اللصفحة الرئيسية";
   static const n = "";
 }
