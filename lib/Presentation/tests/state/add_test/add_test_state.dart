@@ -31,9 +31,13 @@ final class AddTestError extends AddTestState {
 }
 
 final class AddTestInformation extends AddTestState {
+  final List<School> schools;
   final TestInformation? information;
 
-  const AddTestInformation({required this.information});
+  const AddTestInformation({
+    required this.schools,
+    required this.information,
+  });
   @override
   List<Object?> get props => [information];
 }

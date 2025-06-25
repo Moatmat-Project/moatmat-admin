@@ -220,19 +220,19 @@ class _PagesHolderViewState extends State<PagesHolderView> {
               FocusManager.instance.primaryFocus?.unfocus();
             },
           ),
-          SpeedDialChild(
-            label: "إرسال اشعارات",
-            child: const Icon(Icons.notification_add),
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => BlocProvider(
-                    create: (context) => locator<SendNotificationBloc>(),
-                    child: SendNotificationView(),
-                  )),
-              );
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
-          ),
+          // SpeedDialChild(
+          //   label: "إرسال اشعارات",
+          //   child: const Icon(Icons.notification_add),
+          //   onTap: () async {
+          //     await Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => BlocProvider(
+          //           create: (context) => locator<SendNotificationBloc>(),
+          //           child: SendNotificationView(),
+          //         )),
+          //     );
+          //     FocusManager.instance.primaryFocus?.unfocus();
+          //   },
+          // ),
           SpeedDialChild(
             label: "الاشعارات",
             child: const Icon(Icons.notification_important),
