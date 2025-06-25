@@ -9,6 +9,7 @@ class SchoolRepositoryImpl implements SchoolRepository {
   final SchoolRemoteDataSource remoteDataSource;
 
   SchoolRepositoryImpl({required this.remoteDataSource});
+ 
 
   @override
   Future<Either<Failure, List<School>>> fetchAllSchools() async {

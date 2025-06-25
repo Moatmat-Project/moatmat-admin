@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moatmat_admin/Core/resources/colors_r.dart';
+import 'package:moatmat_admin/Core/resources/fonts_r.dart';
 import 'package:moatmat_admin/Core/resources/sizes_resources.dart';
 
 import '../../resources/spacing_resources.dart';
