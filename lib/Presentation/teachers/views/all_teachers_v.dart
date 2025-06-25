@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moatmat_admin/Core/widgets/appbar/report_icon_w.dart';
 import 'package:moatmat_admin/Core/widgets/appbar/student_search_icon.dart';
 import 'package:moatmat_admin/Core/widgets/toucheable_tile_widget.dart';
 import 'package:moatmat_admin/Features/auth/domain/entites/teacher_data.dart';
 import 'package:moatmat_admin/Presentation/teachers/state/teachers_manager/teachers_manager_cubit.dart';
+import 'package:moatmat_admin/Presentation/teachers/views/add_teacher_v.dart';
 import 'package:moatmat_admin/Presentation/teachers/views/update_teacher_v.dart';
 import '../../../Core/resources/sizes_resources.dart';
 import '../../../Core/widgets/fields/text_input_field.dart';
@@ -50,6 +52,7 @@ class _AllTeachersViewState extends State<AllTeachersView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("الاساتذة"),
+
         actions: [
           //   IconButton(
           // onPressed: () async {
@@ -174,6 +177,24 @@ class _AllTeachersViewState extends State<AllTeachersView> {
             child: CupertinoActivityIndicator(),
           );
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_home,//Developer Account 1
+        children: [
+          SpeedDialChild(
+            label: "إضافة استاذ",
+            child: const Icon(Icons.person),
+            onTap: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddTeacherView(),
+                ),
+              );
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+          ),
+        ],
       ),
     );
   }

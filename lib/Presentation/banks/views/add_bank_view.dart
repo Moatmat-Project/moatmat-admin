@@ -43,7 +43,7 @@ class _AddBankViewState extends State<AddBankView> {
         },
         builder: (context, state) {
           if (state is AddBankInformation) {
-            return SetInformationView(
+              return SetInformationView(
               title: state.information?.title,
               classs: state.information?.classs,
               material: state.information?.material,
@@ -57,32 +57,35 @@ class _AddBankViewState extends State<AddBankView> {
               isBank: true,
               afterSet: ({
                 required classs,
+                required files,
+                required images,
                 required material,
                 required password,
                 required period,
                 previous,
+                required price,
+                required schoolId,
                 required teacher,
                 required title,
-                required price,
                 required video,
-                required images,
-                required files,
               }) {
-                //
-                var info = BankInformation(
-                  title: title,
-                  classs: classs,
-                  material: material,
-                  teacher: teacher,
-                  price: price,
-                  video: video,
-                  files: files,
-                  images: images,
-                );
-                //
-                context.read<AddBankCubit>().setBankInformation(
-                      information: info,
-                    );
+                {
+                  //
+                  var info = BankInformation(
+                    title: title,
+                    classs: classs,
+                    material: material,
+                    teacher: teacher,
+                    price: price,
+                    video: video,
+                    files: files,
+                    images: images,
+                  );
+                  //
+                  context.read<AddBankCubit>().setBankInformation(
+                        information: info,
+                      );
+                }
               },
             );
           } else if (state is AddBankProperties) {

@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:moatmat_admin/Core/errors/exceptions.dart';
 import 'package:moatmat_admin/Features/requests/domain/usecases/send_request_uc.dart';
+import 'package:moatmat_admin/Features/schools/domain/usecases/fetch_all_schools_uc.dart';
 import 'package:moatmat_admin/Features/tests/domain/entities/test/test.dart';
 import 'package:moatmat_admin/Features/tests/domain/entities/test/test_information.dart';
 import 'package:moatmat_admin/Features/tests/domain/entities/test/test_properties.dart';
@@ -14,6 +16,7 @@ import '../../../../Core/injection/app_inj.dart';
 import '../../../../Core/services/questions_cash_s.dart';
 import '../../../../Features/auth/domain/entites/teacher_data.dart';
 import '../../../../Features/requests/domain/entities/request.dart';
+import '../../../../Features/schools/domain/entites/school.dart';
 import '../../../../Features/tests/domain/usecases/upload_test_uc.dart';
 
 part 'add_test_state.dart';
@@ -201,8 +204,16 @@ class AddTestCubit extends Cubit<AddTestState> {
   }
 
   // views
-  emitTestInformation() {
-    emit(AddTestInformation(information: information));
+  Future<void> emitTestInformation() async {
+    final response = await locator<FetchAllSchoolsUC>().call();
+    response.fold(
+      (l) {
+        emit(AddTestError(exception: AnonException()));
+      },
+      (r) {
+        emit(AddTestInformation(information: information, schools: r));
+      },
+    );
   }
 
   emitTestProperties() {

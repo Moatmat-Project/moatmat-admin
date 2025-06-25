@@ -6,6 +6,7 @@ class TestInformation {
   final String classs;
   final String material;
   final String teacher;
+  final String? schoolId;
   final int? price;
   final String? password;
   final int? period;
@@ -19,6 +20,7 @@ class TestInformation {
     required this.classs,
     required this.material,
     required this.teacher,
+    required this.schoolId,
     required this.price,
     required this.password,
     required this.period,
@@ -32,6 +34,7 @@ class TestInformation {
     String? classs,
     String? material,
     String? teacher,
+    String? schoolId,
     int? price,
     String? password,
     int? period,
@@ -45,6 +48,7 @@ class TestInformation {
       classs: classs ?? this.classs,
       material: material ?? this.material,
       teacher: teacher ?? this.teacher,
+      schoolId: schoolId ?? this.schoolId,
       price: price ?? this.price,
       password: password ?? this.password,
       period: period ?? this.period,

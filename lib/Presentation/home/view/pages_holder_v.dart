@@ -3,8 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moatmat_admin/Core/injection/app_inj.dart';
 import 'package:moatmat_admin/Core/resources/colors_r.dart';
+import 'package:moatmat_admin/Core/resources/sizes_resources.dart';
+import 'package:moatmat_admin/Core/resources/spacing_resources.dart';
+import 'package:moatmat_admin/Core/resources/texts_resources.dart';
+import 'package:moatmat_admin/Core/widgets/appbar/student_search_icon.dart';
 import 'package:moatmat_admin/Core/widgets/material_picker_v.dart';
+import 'package:moatmat_admin/Core/widgets/toucheable_box_widget.dart';
+import 'package:moatmat_admin/Core/widgets/toucheable_tile_widget.dart';
 import 'package:moatmat_admin/Presentation/banks/views/add_bank_view.dart';
+
 import 'package:moatmat_admin/Presentation/banks/views/banks_search_result_v.dart';
 import 'package:moatmat_admin/Presentation/banks/views/my_banks_v.dart';
 import 'package:moatmat_admin/Presentation/codes/views/codes_views_manager.dart';
@@ -14,6 +21,7 @@ import 'package:moatmat_admin/Presentation/notifications/state/send_notification
 import 'package:moatmat_admin/Presentation/notifications/views/notifications_view.dart';
 import 'package:moatmat_admin/Presentation/notifications/views/send_notification_view.dart';
 import 'package:moatmat_admin/Presentation/requests/views/requests_view_manager.dart';
+import 'package:moatmat_admin/Presentation/schools/views/schools_view.dart';
 import 'package:moatmat_admin/Presentation/students/views/add_results_v.dart';
 import 'package:moatmat_admin/Presentation/students/views/add_student_balance_v.dart';
 import 'package:moatmat_admin/Presentation/teachers/views/add_teacher_v.dart';
@@ -21,7 +29,12 @@ import 'package:moatmat_admin/Presentation/teachers/views/all_teachers_v.dart';
 import 'package:moatmat_admin/Presentation/tests/views/add_test_vew.dart';
 import 'package:moatmat_admin/Presentation/tests/views/my_tests_v.dart';
 import 'package:moatmat_admin/Presentation/tests/views/tests_search_result_v.dart';
-
+import '../../../Core/widgets/appbar/report_icon_w.dart';
+import '../../banks/views/add_bank_view.dart';
+import '../../banks/views/my_banks_v.dart';
+import '../../students/views/add_results_v.dart';
+import '../../tests/views/add_test_vew.dart';
+import '../../tests/views/my_tests_v.dart';
 class PagesHolderView extends StatefulWidget {
   const PagesHolderView({super.key});
 
@@ -51,7 +64,112 @@ class _PagesHolderViewState extends State<PagesHolderView> {
         },
         children: [
           //
-          const AllTeachersView(),
+          Scaffold(
+            appBar: AppBar(
+              title: Text(AppBarTitles.home),
+              actions: const [
+                StudentsSearchIconWidget(),
+                ReportIconWidget(),
+              ],
+            ),
+            body: Center(
+              child: Column(
+                children: [
+                  // TouchableTileWidget(
+                  //   title: "ادارة المدارس",
+                  //   onTap: () {
+
+                  //   },
+                  // ),
+                  // TouchableTileWidget(
+                  //   title: "ادارة الاساتذة",
+                  //   onTap: () {
+
+                  //   },
+                  // ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => SchoolsView(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: SpacingResources.mainWidth(context),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: SizesResources.s5),
+                            Icon(
+                              Icons.school_rounded,
+                              color: ColorsResources.darkPrimary,
+                              size: 50,
+                            ),
+                            SizedBox(height: SizesResources.s5),
+                            Text(
+                              "ادارة المدارس",
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                                color: ColorsResources.primary,
+                              ),
+                            ),
+                            SizedBox(height: SizesResources.s5),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AllTeachersView(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: SpacingResources.mainWidth(context),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: SizesResources.s5),
+                            Icon(
+                              Icons.person_pin_rounded,
+                              color: ColorsResources.darkPrimary,
+                              size: 50,
+                            ),
+                            SizedBox(height: SizesResources.s5),
+                            Text(
+                              "ادارة الاساتذة",
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                                color: ColorsResources.primary,
+                              ),
+                            ),
+                            SizedBox(height: SizesResources.s5),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          // const AllTeachersView(),
           //
           MaterialPickerView(
             onPick: (s) {
@@ -108,9 +226,9 @@ class _PagesHolderViewState extends State<PagesHolderView> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.group),
+              child: Icon(Icons.home_filled),
             ),
-            label: "الاساتذة",
+            label: "الرئيسية",
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -175,18 +293,18 @@ class _PagesHolderViewState extends State<PagesHolderView> {
               FocusManager.instance.primaryFocus?.unfocus();
             },
           ),
-          SpeedDialChild(
-            label: "إضافة استاذ",
-            child: const Icon(Icons.person),
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddTeacherView(),
-                ),
-              );
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
-          ),
+          // SpeedDialChild(
+          //   label: "إضافة استاذ",
+          //   child: const Icon(Icons.person),
+          //   onTap: () async {
+          //     await Navigator.of(context).push(
+          //       MaterialPageRoute(
+          //         builder: (context) => const AddTeacherView(),
+          //       ),
+          //     );
+          //     FocusManager.instance.primaryFocus?.unfocus();
+          //   },
+          // ),
           SpeedDialChild(
             label: "إضافة بنك",
             child: const Icon(Icons.add),
