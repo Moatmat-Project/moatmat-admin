@@ -1,48 +1,125 @@
-import 'package:moatmat_admin/Features/auth/domain/repository/teachers_repository.dart';
-import 'package:moatmat_admin/Features/auth/domain/use_cases/get_teacher_data.dart';
-import 'package:moatmat_admin/Features/auth/domain/use_cases/get_user_data.dart';
-import 'package:moatmat_admin/Features/auth/domain/use_cases/update_user_data_uc.dart';
-import 'package:moatmat_admin/Features/notifications/data/datasources/notifications_ds.dart';
-import 'package:moatmat_admin/Features/notifications/data/repository/repository_impl.dart';
-import 'package:moatmat_admin/Features/notifications/domain/repository/repository.dart';
-import 'package:moatmat_admin/Features/notifications/domain/usecases/send_bulk_notification_uc.dart';
-import 'package:moatmat_admin/Features/notifications/domain/usecases/send_notification_uc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:moatmat_admin/Core/injection/app_inj.dart';
+import 'package:moatmat_admin/Features/notifications/data/datasources/notifications_remote_datasource.dart';
+import 'package:moatmat_admin/Features/notifications/data/repositories/notifications_repository_implements.dart';
+import 'package:moatmat_admin/Features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/cancel_notification_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/create_notifications_channel_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/delete_device_token_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/display_firebase_notification_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/display_notification_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/get_device_token_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/get_notifications_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/initialize_firebase_notifications_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/initialize_local_notifications_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/refresh_device_token_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/send_notification_to_topics_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/send_notification_to_users_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/subscribe_to_topic_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/register_device_token_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/unsubscribe_to_topic_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/upload_notification_image_usecase.dart';
+import 'package:moatmat_admin/Presentation/notifications/state/initialize_notifications_cubit/initialize_notifications_cubit.dart';
+import 'package:moatmat_admin/Presentation/notifications/state/notification_settings_bloc/notification_settings_bloc.dart';
+import 'package:moatmat_admin/Presentation/notifications/state/notifications_bloc/notifications_bloc.dart';
+import 'package:moatmat_admin/Presentation/notifications/state/send_notification_bloc/send_notification_bloc.dart';
 
-import '../../Features/auth/data/data_source/users_ds.dart';
-import '../../Features/auth/data/repository/teachers_repository_impl.dart';
-import '../../Features/auth/domain/use_cases/sign_in_uc.dart';
-import '../../Features/auth/domain/use_cases/sign_up_uc.dart';
-import 'app_inj.dart';
-
-injectNotifications() {
-  injectDS();
-  injectRepo();
-  injectUC();
+Future<void> injectNotifications() async {
+  await injectDS();
+  await injectRepo();
+  await injectUC();
+  await injectPlugins();
+  await injectBlocs();
+  //
+  await locator<InitializeLocalNotificationsUsecase>().call();
+  await locator<InitializeFirebaseNotificationsUsecase>().call();
 }
 
-void injectUC() {
-  locator.registerFactory<SendNotification>(
-    () => SendNotification(
-      repository: locator(),
-    ),
+Future<void> injectUC() async {
+  locator.registerFactory<InitializeFirebaseNotificationsUsecase>(
+    () => InitializeFirebaseNotificationsUsecase(repository: locator()),
   );
-  locator.registerFactory<SendBulkNotification>(
-    () => SendBulkNotification(
-      repository: locator(),
-    ),
+  locator.registerFactory<InitializeLocalNotificationsUsecase>(
+    () => InitializeLocalNotificationsUsecase(repository: locator()),
+  );
+
+  locator.registerFactory<GetDeviceTokenUsecase>(
+    () => GetDeviceTokenUsecase(repository: locator()),
+  );
+  locator.registerFactory<DisplayNotificationUsecase>(
+    () => DisplayNotificationUsecase(repository: locator()),
+  );
+  locator.registerFactory<DisplayFirebaseNotificationUsecase>(
+    () => DisplayFirebaseNotificationUsecase(repository: locator()),
+  );
+  locator.registerFactory<CancelNotificationUsecase>(
+    () => CancelNotificationUsecase(repository: locator()),
+  );
+  locator.registerFactory<CreateNotificationsChannelUsecase>(
+    () => CreateNotificationsChannelUsecase(repository: locator()),
+  );
+  locator.registerFactory<SubscribeToTopicUsecase>(
+    () => SubscribeToTopicUsecase(repository: locator()),
+  );
+  locator.registerFactory<UnsubscribeToTopicUsecase>(
+    () => UnsubscribeToTopicUsecase(repository: locator()),
+  );
+  locator.registerFactory<GetNotificationsUsecase>(
+    () => GetNotificationsUsecase(repository: locator()),
+  );
+  locator.registerFactory<RefreshDeviceTokenUsecase>(
+    () => RefreshDeviceTokenUsecase(repository: locator()),
+  );
+
+  locator.registerLazySingleton(() => SendNotificationToUsersUsecase(repository: locator()));
+  locator.registerLazySingleton(() => SendNotificationToTopicsUsecase(repository: locator()));
+  locator.registerLazySingleton(
+    () => DeleteDeviceTokenUsecase(repository: locator()),
+  );
+  locator.registerLazySingleton(
+    () => RegisterDeviceTokenUseCase(repository: locator()),
+  );
+  locator.registerLazySingleton(
+    () => UploadNotificationImageUsecase(repository: locator()),
   );
 }
 
-void injectRepo() {
-  locator.registerFactory<NotificationRepository>(
-    () => NotificationRepositoryImpl(
-      dataSource: locator(),
-    ),
+Future<void> injectRepo() async {
+  locator.registerLazySingleton<NotificationsRepository>(
+    () => NotificationsRepositoryImplements( locator<NotificationsRemoteDatasource>()),
   );
 }
 
-void injectDS() {
-  locator.registerFactory<NotificationDS>(
-    () => NotificationDSImpl(),
+Future<void> injectDS() async {
+
+  locator.registerLazySingleton<NotificationsRemoteDatasource>(
+    () => NotificationsRemoteDatasourceImpl(),
   );
+}
+
+Future<void> injectBlocs() async {
+  locator.registerFactory(() => InitializeNotificationsCubit(
+        initializeLocalNotifications: locator(),
+        initializeFirebaseNotifications: locator(),
+      ));
+  locator.registerLazySingleton(() => NotificationSettingsBloc(
+        getDeviceToken: locator(),
+        subscribeToTopic: locator(),
+        unsubscribeFromTopic: locator(),
+      ));
+
+  locator.registerLazySingleton(() => SendNotificationBloc(
+        uploadNotificationImageUsecase: locator(),
+        sendNotificationToUsersUsecase: locator(),
+        sendNotificationToTopicsUsecase: locator(),
+      ));
+
+  locator.registerLazySingleton(() => NotificationsBloc(
+        getNotificationsUsecase: locator(),
+    
+      ));
+}
+
+Future<void> injectPlugins() async {
+  locator.registerSingleton<FlutterLocalNotificationsPlugin>(FlutterLocalNotificationsPlugin());
 }

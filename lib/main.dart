@@ -23,7 +23,6 @@ import 'Presentation/codes/state/codes/codes_cubit.dart';
 import 'Presentation/folders/state/add_to_folder/add_to_folder_cubit.dart';
 import 'Presentation/folders/state/pick_teacher_item/pick_teacher_item_cubit.dart';
 import 'Presentation/groups/state/group_test_detials/group_test_details_cubit.dart';
-import 'Presentation/notifications/state/cubit/notifications_cubit.dart';
 import 'Presentation/reports/state/reports/reports_cubit.dart';
 import 'Presentation/scanner/state/cubit/explore_outer_tests_cubit.dart';
 import 'Presentation/teachers/state/teachers_manager/teachers_manager_cubit.dart';
@@ -65,7 +64,6 @@ void main() async {
         BlocProvider(create: (context) => TestResultsCubit()),
         BlocProvider(create: (context) => MyStudentsCubit()),
         BlocProvider(create: (context) => StudentCubit()),
-        BlocProvider(create: (context) => NotificationsCubit()),
         BlocProvider(create: (context) => BankResultsCubit()),
         BlocProvider(create: (context) => TeachersManagerCubit()),
         BlocProvider(create: (context) => SearchBankCubit()),
@@ -83,6 +81,7 @@ void main() async {
         BlocProvider(create: (context) => StudentReportsCubit()),
         BlocProvider(create: (context) => ManageTeacherPurchasesBloc()),
         BlocProvider(create: (context) => locator<SchoolBloc>()),
+       
       ],
       child: const AppRoot(),
     ),
