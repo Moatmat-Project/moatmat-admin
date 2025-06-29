@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 import 'package:moatmat_admin/Features/auth/domain/entites/teacher_data.dart';
-import 'package:moatmat_admin/Features/auth/domain/entites/teacher_options.dart';
 import 'package:moatmat_admin/Features/auth/domain/use_cases/update_user_data_uc.dart';
+import 'package:moatmat_admin/Features/notifications/domain/requests/register_device_token_request.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/get_device_token_usecase.dart';
+import 'package:moatmat_admin/Features/notifications/domain/usecases/register_device_token_usecase.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -73,7 +77,8 @@ class AuthCubit extends Cubit<AuthState> {
         },
         (r) async {
           if ((r.options.isAdmin ?? false) || kDebugMode) {
-            injectTeacherData(r);
+            await injectTeacherData(r);
+            await registerDeviceToken();
             emit(AuthDone());
           } else {
             emit(
@@ -136,7 +141,25 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   //
-  finishAuth() {
-    init();
+  finishAuth() async {
+    await registerDeviceToken();
+    await init();
+  }
+
+  //
+  registerDeviceToken() async {
+    final platform = Platform.isAndroid ? 'android' : 'ios';
+    final deviceTokenResult = await locator<GetDeviceTokenUsecase>().call();
+    await deviceTokenResult.fold(
+      (l) async => debugPrint('Failed to get device token: $l'),
+      (deviceToken) async {
+        await locator<RegisterDeviceTokenUseCase>().call(
+          RegisterDeviceTokenRequest(
+            deviceToken: deviceToken,
+            platform: platform,
+          ),
+        );
+      },
+    );
   }
 }

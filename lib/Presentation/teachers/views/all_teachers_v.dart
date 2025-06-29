@@ -52,6 +52,76 @@ class _AllTeachersViewState extends State<AllTeachersView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("الاساتذة"),
+
+        actions: [
+          //   IconButton(
+          // onPressed: () async {
+          //   try {
+
+          //     final data = await Supabase.instance.client.from('device_tokens').select('*');
+          //     debugPrint('Fetched device tokens: ${data.length}');
+          //     if (!mounted) return;
+          //     if (data == null || data.isEmpty) {
+          //       showDialog(
+          //         context: context,
+          //         builder: (context) => AlertDialog(
+          //           title: const Text('Device Tokens'),
+          //           content: const Text('No device tokens found.'),
+          //           actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))],
+          //         ),
+          //       );
+          //       return;
+          //     }
+          //     // Get all column names from the first row
+          //     final columns = (data[0]).keys.toList();
+          //     showDialog(
+          //       context: context,
+          //       builder: (context) => AlertDialog(
+          //         title: const Text('Device Tokens Table'),
+          //         content: SizedBox(
+          //           width: double.maxFinite,
+          //           child: SingleChildScrollView(
+          //             scrollDirection: Axis.horizontal,
+          //             child: SingleChildScrollView(
+          //               child: DataTable(
+          //                 border: TableBorder.all(color: Colors.black),
+          //                 columns: columns.map((col) => DataColumn(label: Text(col))).toList(),
+          //                 rows: data
+          //                     .map<DataRow>((row) => DataRow(
+          //                           cells: columns
+          //                               .map((col) => DataCell(Text(row[col]?.toString() ?? '')))
+          //                               .toList(),
+          //                         ))
+          //                     .toList(),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         actions: [
+          //           TextButton(
+          //             onPressed: () => Navigator.pop(context),
+          //             child: const Text('Close'),
+          //           ),
+          //         ],
+          //       ),
+          //     );
+          //   } catch (e) {
+          //     debugPrint('Error fetching device tokens: $e');
+          //     if (mounted) {
+          //       ScaffoldMessenger.of(context).showSnackBar(
+          //         SnackBar(
+          //           content: Text('Failed to fetch device tokens: $e'),
+          //           backgroundColor: Colors.red,
+          //         ),
+          //       );
+          //     }
+          //   }
+          // },
+          // icon: const Icon(Icons.add),
+          ///),
+          StudentsSearchIconWidget(),
+          ReportIconWidget(),
+        ],
       ),
       body: BlocConsumer<TeachersManagerCubit, TeachersManagerState>(
         listener: (context, state) {},

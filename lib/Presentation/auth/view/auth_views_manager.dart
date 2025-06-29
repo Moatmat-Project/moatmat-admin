@@ -42,7 +42,7 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
             return ErrorView(error: state.error);
           } else if (state is AuthUpdate) {
             return UpdateView(updateInfo: state.updateInfo);
-          }else if (state is AuthLoading) {
+          } else if (state is AuthLoading) {
             return const Center(
               child: CupertinoActivityIndicator(),
             );

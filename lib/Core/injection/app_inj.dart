@@ -7,7 +7,9 @@ import 'package:moatmat_admin/Core/injection/reports_inj.dart';
 import 'package:moatmat_admin/Core/injection/school_inj.dart';
 import 'package:moatmat_admin/Core/injection/tests_inj.dart';
 import 'package:moatmat_admin/Core/injection/update_inj.dart';
+import 'package:moatmat_admin/Core/services/database/database_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
 import 'auth_inj.dart';
 import 'codes_inj.dart';
 import 'notifications_inj.dart';
@@ -21,7 +23,9 @@ initGetIt() async {
   //
   var sp = await SharedPreferences.getInstance();
   locator.registerSingleton(sp);
-  //
+  locator.registerFactory<DatabaseService>(() => DatabaseServiceImplements());
+  final database = await locator.get<DatabaseService>().initialize();
+  locator.registerSingleton<Database>(database);
 
   injectAuth();
   //
@@ -43,7 +47,7 @@ initGetIt() async {
   //
   injectGroups();
   //
-  injectNotifications();
+  await injectNotifications();
   //
   codesInjector();
   //

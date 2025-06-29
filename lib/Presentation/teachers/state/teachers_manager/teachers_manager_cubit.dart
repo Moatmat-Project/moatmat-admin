@@ -3,8 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:moatmat_admin/Core/injection/app_inj.dart';
 import 'package:moatmat_admin/Features/auth/domain/use_cases/get_all_teachers_uc.dart';
 import 'package:moatmat_admin/Features/auth/domain/use_cases/update_user_data_uc.dart';
-import 'package:moatmat_admin/Features/purchase/domain/entities/purchase_item.dart';
-import 'package:moatmat_admin/Features/purchase/domain/usecases/teacher_purchases_uc.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../Features/auth/domain/entites/teacher_data.dart';
