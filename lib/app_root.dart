@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:moatmat_admin/Presentation/auth/view/auth_views_manager.dart';
+import 'package:moatmat_admin/Presentation/schools/views/schools_view.dart';
 import 'Core/resources/colors_r.dart';
 import 'Core/resources/spacing_resources.dart';
-import 'Presentation/auth/view/auth_views_manager.dart';
 
 class AppRoot extends StatelessWidget {
   const AppRoot({super.key});

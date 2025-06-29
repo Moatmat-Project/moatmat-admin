@@ -7,6 +7,7 @@ import 'package:moatmat_admin/Presentation/outer_tests_results/state/cubit/outer
 import 'package:moatmat_admin/Presentation/picker/state/cubit/questions_picker_cubit.dart';
 import 'package:moatmat_admin/Presentation/questions/state/cubit/create_question_cubit.dart';
 import 'package:moatmat_admin/Presentation/requests/state/cubit/requests_cubit.dart';
+import 'package:moatmat_admin/Presentation/schools/state/school_bloc/school_bloc.dart';
 import 'package:moatmat_admin/Presentation/students/state/my_students/my_students_cubit.dart';
 import 'package:moatmat_admin/Presentation/students/state/student_reports/student_reports_cubit.dart';
 import 'package:moatmat_admin/Presentation/teachers/state/manage_teacher_purchases/manage_teacher_purchases_bloc.dart';
@@ -81,6 +82,7 @@ void main() async {
         BlocProvider(create: (context) => GroupTestDetailsCubit()),
         BlocProvider(create: (context) => StudentReportsCubit()),
         BlocProvider(create: (context) => ManageTeacherPurchasesBloc()),
+        BlocProvider(create: (context) => locator<SchoolBloc>()),
       ],
       child: const AppRoot(),
     ),

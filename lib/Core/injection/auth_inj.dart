@@ -43,12 +43,12 @@ void injectUC() {
       repository: locator(),
     ),
   );
-    locator.registerFactory<GetAllTeachersUC>(
+  locator.registerFactory<GetAllTeachersUC>(
     () => GetAllTeachersUC(
       repository: locator(),
     ),
   );
-    locator.registerFactory<GetUsersDataByIdsUC>(
+  locator.registerFactory<GetUsersDataByIdsUC>(
     () => GetUsersDataByIdsUC(
       repository: locator(),
     ),

@@ -26,4 +26,13 @@ class ColorsResources {
   static const Color homeLocations = Color(0xffF8FDFF);
   //
   static const Color keyboard = Color(0xff151515);
+
+  // aboud added (Temp):
+  static const Color primaryLight = Color(0xFFE0E0FF);
+  static const Color danger = Color(0xFFD32F2F); // Colors.red[700]
+  static const Color dangerLight = Color(0xFFFFE0E0);
+  // Add other colors like textPrimary, textSecondary, cardBackground, border as needed
+  static const Color textPrimary = Colors.black87;
+  static const Color textSecondary = Color(0xFF616161); // Colors.grey[700]
+  static const Color cardBackground = Colors.white;
 }

@@ -41,7 +41,7 @@ class MyTextFormFieldWidget extends StatelessWidget {
   final double? width;
   final TextAlign? textAlign;
   final Widget? suffix;
-  
+
   @override
   Widget build(BuildContext context) {
     return Row(

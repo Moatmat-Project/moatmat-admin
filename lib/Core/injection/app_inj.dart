@@ -4,7 +4,7 @@ import 'package:moatmat_admin/Core/injection/buckets_inj.dart';
 import 'package:moatmat_admin/Core/injection/groups_inj.dart';
 import 'package:moatmat_admin/Core/injection/purchases_inj.dart';
 import 'package:moatmat_admin/Core/injection/reports_inj.dart';
-import 'package:moatmat_admin/Core/injection/teachers_inj.dart';
+import 'package:moatmat_admin/Core/injection/school_inj.dart';
 import 'package:moatmat_admin/Core/injection/tests_inj.dart';
 import 'package:moatmat_admin/Core/injection/update_inj.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,4 +50,6 @@ initGetIt() async {
   injectScanner();
   //
   injectUpdate();
+  //
+  injectSchools();
 }

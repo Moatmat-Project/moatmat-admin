@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moatmat_admin/Core/resources/colors_r.dart';
 
-import '../resources/sizes_resources.dart';
-
 showAlert({
   required BuildContext context,
   required String title,
