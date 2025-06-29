@@ -165,6 +165,46 @@ class _PagesHolderViewState extends State<PagesHolderView> {
                       ),
                     ),
                   )
+             ,     Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                          Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => BlocProvider(
+                    create: (context) => locator<SendNotificationBloc>(),
+                    child: SendNotificationView(),
+                  )),
+              );
+                      },
+                      child: SizedBox(
+                        width: SpacingResources.mainWidth(context),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: SizesResources.s5),
+                            Icon(
+                              Icons.notification_add,
+                              color: ColorsResources.darkPrimary,
+                              size: 50,
+                            ),
+                            SizedBox(height: SizesResources.s5),
+                            Text(
+                              "ارسال اشعارات",
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                                color: ColorsResources.primary,
+                              ),
+                            ),
+                            SizedBox(height: SizesResources.s5),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -338,19 +378,19 @@ class _PagesHolderViewState extends State<PagesHolderView> {
               FocusManager.instance.primaryFocus?.unfocus();
             },
           ),
-          SpeedDialChild(
-            label: "إرسال اشعارات",
-            child: const Icon(Icons.notification_add),
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => BlocProvider(
-                    create: (context) => locator<SendNotificationBloc>(),
-                    child: SendNotificationView(),
-                  )),
-              );
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
-          ),
+          // SpeedDialChild(
+          //   label: "إرسال اشعارات",
+          //   child: const Icon(Icons.notification_add),
+          //   onTap: () async {
+          //     // await Navigator.of(context).push(
+          //     //   MaterialPageRoute(builder: (context) => BlocProvider(
+          //     //       create: (context) => locator<SendNotificationBloc>(),
+          //     //       child: SendNotificationView(),
+          //     //     )),
+          //     // );
+          //     // FocusManager.instance.primaryFocus?.unfocus();
+          //   },
+          // ),
           SpeedDialChild(
             label: "الاشعارات",
             child: const Icon(Icons.notification_important),
